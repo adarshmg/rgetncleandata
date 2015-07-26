@@ -35,6 +35,7 @@ library(dplyr)
 mergedDataSet <- rbind(train_data,test_data)
 mergedSubSet <- select(mergedDataSet,contains("mean()"),contains("std()"),contains("_id"),data_type)
 mergedDescriptiveSet <- merge(mergedSubSet,activity_labels,by="activity_id")
+mergedDescriptiveSet<-select(mergedDescriptiveSet,-activity_id)
 
 library(plyr)
 tidyData <- ddply(mergedDescriptiveSet,groupcols, function(x) colMeans(x[datacols],na.rm = TRUE))
