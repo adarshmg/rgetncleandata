@@ -14,6 +14,8 @@ names(train_x_data) <- features$V2
 names(train_y_data) <- c("activity_id")
 train_data <- cbind(train_x_data,train_subject["subject_id"])
 train_data <- cbind(train_data,train_y_data["activity_id"])
+train_data[,"data_type"] <- "TRAIN"
+
 
 
 
@@ -23,6 +25,10 @@ test_subject <- read.table("test//subject_test.txt")
 names(test_subject) <- c("subject_id")
 names(test_x_data) <- features$V2
 names(test_y_data) <- c("activity_id")
+test_data <- cbind(test_x_data,test_subject["subject_id"])
+test_data <- cbind(test_data,test_y_data["activity_id"])
+test_data[,"data_type"] <- "TEST"
+
 
 
 library(dplyr)
@@ -32,7 +38,7 @@ mergedDescriptiveSet <- merge(mergedSubSet,activity_labels,by="activity_id")
 
 library(plyr)
 tidyData <- ddply(mergedDescriptiveSet,groupcols, function(x) colMeans(x[datacols],na.rm = TRUE))
-write.table(tidyData,file="tidyData.txt",row.names = FALSE)
+tidyData
 
 
 
